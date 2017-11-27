@@ -5,10 +5,10 @@ class Header extends Component {
     return (
       <div>
         <header>
-        <div class="blog-header">
-            <div class="container">
-            <h1 class="blog-title">Readable</h1>
-            <p class="lead blog-description">A ReactJS project for Udacity.</p>
+        <div className="blog-header">
+            <div className="container">
+            <h1 className="blog-title">Readable</h1>
+            <p className="lead blog-description">A ReactJS project for Udacity.</p>
             </div>
         </div>
         </header>          

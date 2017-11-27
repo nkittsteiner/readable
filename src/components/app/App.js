@@ -4,15 +4,23 @@ import './App.css';
 import Header from '../header/Header'
 import BlogPost from '../blog/BlogPost'
 import CategoryList from '../category/CategoryList'
+import { connect } from 'react-redux'
+import {getCategories} from '../../actions'
 
-class App extends Component {
+
+class App extends Component {  
+  state = {
+    categories: []
+  }
   render() {
+    this.props.fetchCategories();    
+    
     return (
       <div>
         <Header></Header>
-          <main role="main" class="container">
-            <div class="row">
-              <div class="col-sm-8 blog-main">
+          <main role="main" className="container">
+            <div className="row">
+              <div className="col-sm-8 blog-main">
                 <BlogPost></BlogPost>                
               </div>
               <CategoryList />
@@ -23,4 +31,16 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps =  (state, props) => ({  
+  categories: state.categories
+})
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    fetchCategories: () => dispatch(getCategories([1,2,3]))
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

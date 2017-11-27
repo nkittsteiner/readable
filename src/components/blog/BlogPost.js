@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class BlogPost extends Component {
   render() {
     return (
-          <div class="blog-post">
-            <h2 class="blog-post-title">Another blog post</h2>
-            <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
+          <div className="blog-post">
+            <h2 className="blog-post-title">Another blog post</h2>
+            <p className="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
 
             <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
             <blockquote>
