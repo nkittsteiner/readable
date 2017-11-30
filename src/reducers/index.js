@@ -1,17 +1,25 @@
 import { combineReducers } from 'redux'
-import * as API from '../utils/api'
 import {
-    GET_CATEGORIES
+    GET_CATEGORIES,
+    SET_CATEGORIES
 } from '../actions'
 
 
-const reducer = (state = {}, action) =>{
+const initialCategories = {    
+}
+
+const reducer = (state = initialCategories, action) =>{
     switch(action.type){
-        case GET_CATEGORIES:            
+        case GET_CATEGORIES:
             return [
                 ...state,
                 action.categories
             ]
+        case SET_CATEGORIES:
+        return [
+            ...state,
+            action.categories
+        ]            
         default:
             return state
     }

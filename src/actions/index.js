@@ -1,5 +1,5 @@
 import * as API from '../utils/api'
-
+export const SET_CATEGORIES = 'SET_CATEGORIES'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const GET_POST_BY_CATEGORIES = 'GET_POST_BY_CATEGORIES'
 export const GET_POSTS = 'GET_POSTS'
@@ -20,8 +20,7 @@ export const getCategories = categories => ({
     categories  
 })
 
-export const fetchCategories = () => dispatch => (    
-    API.getCategories().then(categories => {
-        dispatch(getCategories(categories))
-    })
-)
+export const setCategories = categories => ({
+    type: SET_CATEGORIES,
+    categories  
+})
