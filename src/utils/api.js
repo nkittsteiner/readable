@@ -15,6 +15,12 @@ export const getCategories = () => {
         .then(data => data)
 }
 
+export const getAllPosts = () => {
+  return fetch(`${api}/posts`, { headers })
+        .then(res => res.json())
+        .then(data => data)
+}
+
 /*
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })

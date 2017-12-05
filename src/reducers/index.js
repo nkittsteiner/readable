@@ -1,25 +1,19 @@
 import { combineReducers } from 'redux'
 import {
-    GET_CATEGORIES,
-    SET_CATEGORIES
+    GET_POSTS
 } from '../actions'
 
-
-const initialCategories = {    
+const initialState = {
+    posts: []
 }
 
-const reducer = (state = initialCategories, action) =>{
+const reducer = (state = initialState, action) =>{
     switch(action.type){
-        case GET_CATEGORIES:
-            return [
-                ...state,
-                action.categories
-            ]
-        case SET_CATEGORIES:
-        return [
-            ...state,
-            action.categories
-        ]            
+        case GET_POSTS:
+            const { posts } = action
+            return Object.assign({}, state, {
+                posts: posts
+            })
         default:
             return state
     }

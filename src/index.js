@@ -5,18 +5,20 @@ import App from './components/app/App';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger'
 import reducer from './reducers/';
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import { getPostsAsync } from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
+const loggerMiddleware = createLogger()
 
-const store = createStore(
+let store = createStore(
     reducer,
-    composeEnhancers(applyMiddleware(thunk))
-)
-
+    composeEnhancers(applyMiddleware(thunk, loggerMiddleware))
+);
 
 ReactDOM.render(
     <BrowserRouter>

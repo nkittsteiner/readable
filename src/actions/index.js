@@ -15,6 +15,19 @@ export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
+export const getPosts = posts => ({
+    type: GET_POSTS,
+    posts
+})
+
+export const getPostsAsync = () => {
+    return dispatch => {
+        return API.getAllPosts().then(
+            data => dispatch(getPosts(data))
+        )
+    }
+}
+
 export const getCategories = categories => ({
     type: GET_CATEGORIES,
     categories  

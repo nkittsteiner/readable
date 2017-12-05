@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as BlogAPI from '../../utils/api'
-import { setCategories } from '../../actions/index';
+
 
 
 class CategoryList extends Component {
@@ -38,17 +37,6 @@ class CategoryList extends Component {
   }
 }
 
-const mapStateToProps =  (state, props) => ({
-  categories: state.categories
-})
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCategories: (data) => {
-      console.log('setCategories')
-      dispatch(setCategories(data))
-    }
-  }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);
+export default CategoryList;
