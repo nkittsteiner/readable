@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-    GET_POSTS
+    GET_POSTS, ADD_POST
 } from '../actions'
 
 const initialState = {
@@ -14,6 +14,11 @@ const reducer = (state = initialState, action) =>{
             return Object.assign({}, state, {
                 posts: posts
             })
+        case ADD_POST:
+            const { post } = action
+            return Object.assign({}, state, {
+                posts: state.posts.concat([post])
+            })            
         default:
             return state
     }

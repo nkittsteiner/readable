@@ -21,6 +21,16 @@ export const getAllPosts = () => {
         .then(data => data)
 }
 
+export const addPost = (post) =>
+fetch(`${api}/posts`, {
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ post })
+}).then(res => res.json())
+
 /*
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })

@@ -28,12 +28,7 @@ export const getPostsAsync = () => {
     }
 }
 
-export const getCategories = categories => ({
-    type: GET_CATEGORIES,
-    categories  
-})
-
-export const setCategories = categories => ({
-    type: SET_CATEGORIES,
-    categories  
+export const addPost = (post) => ({
+    type: ADD_POST,
+    post
 })

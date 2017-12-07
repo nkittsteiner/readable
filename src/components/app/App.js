@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Header from '../header/Header'
+import BlogForm from '../form/BlogForm'
 import BlogContainer from '../blog/BlogContainer'
 import CategoryList from '../category/CategoryList'
 import { connect } from 'react-redux'
@@ -29,6 +30,9 @@ class App extends Component {
                   }} />
                 <Route exact path="/" render={({match}) => {
                   return <BlogContainer posts={posts} />
+                  }} />
+                <Route path="/post/new" render={({match}) => {
+                  return <BlogForm action={"new"} formData={{}} />
                   }} />
               </div>
               <CategoryList />
