@@ -25,14 +25,17 @@ class App extends Component {
           <main role="main" className="container">
             <div className="row">
               <div className="col-sm-8 blog-main">
-                <Route path="/:categories" render={({match}) => {
+                <Route exact path="/:categories" render={({match}) => {
                   return <BlogContainer category={match.params.categories} posts={posts} />
                   }} />
                 <Route exact path="/" render={({match}) => {
                   return <BlogContainer posts={posts} />
                   }} />
                 <Route path="/post/new" render={({match}) => {
-                  return <BlogForm action={"new"} formData={{}} />
+                  return <BlogForm action={"new"}  />
+                  }} />
+                <Route path="/post/:postId/edit" render={({match}) => {
+                  return <BlogForm action={"edit"} id={match.params.postId} />
                   }} />
               </div>
               <CategoryList />

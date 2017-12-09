@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-    GET_POSTS, ADD_POST
+    GET_POSTS, ADD_POST, EDIT_POST
 } from '../actions'
 
 const initialState = {
@@ -18,7 +18,11 @@ const reducer = (state = initialState, action) =>{
             const { post } = action
             return Object.assign({}, state, {
                 posts: state.posts.concat([post])
-            })            
+            })
+        case EDIT_POST:
+            return Object.assign({}, state, {
+                posts: state.posts.filter(x => x.id !== action.post.id).concat([action.post])
+            })
         default:
             return state
     }

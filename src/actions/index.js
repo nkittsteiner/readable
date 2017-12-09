@@ -32,3 +32,8 @@ export const addPost = (post) => ({
     type: ADD_POST,
     post
 })
+
+export const editPost = (post) => ({
+    type: EDIT_POST,
+    post
+})

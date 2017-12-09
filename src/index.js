@@ -9,7 +9,6 @@ import { createLogger } from 'redux-logger'
 import reducer from './reducers/';
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import { getPostsAsync } from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
