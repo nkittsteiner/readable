@@ -41,36 +41,28 @@ fetch(`${api}/posts/${post.id}`, {
   body: JSON.stringify({ title: post.title, body: post.body })
 }).then(res => res.json())
 
-/*
-export const get = (bookId) =>
-  fetch(`${api}/books/${bookId}`, { headers })
-    .then(res => res.json())
-    .then(data => data.book)
+export const getComments = (post_id) => {
+  return fetch(`${api}/posts/${post_id}/comments`, { headers })
+        .then(res => res.json())
+        .then(data => data)
+}
 
-export const getAll = () =>
-  fetch(`${api}/books`, { headers })
-    .then(res => res.json())
-    .then(data => data.books)
+export const addComment = (comment) =>
+fetch(`${api}/comments`, {
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ comment })
+}).then(res => res.json())
 
-export const update = (book, shelf) =>
-  fetch(`${api}/books/${book.id}`, {
-    method: 'PUT',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ shelf })
-  }).then(res => res.json())
-
-export const search = (query, maxResults) =>
-  fetch(`${api}/search`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ query, maxResults })
-  }).then(res => res.json())
-    .then(data => data.books)
-
-*/    
+export const editComment = (comment) =>
+fetch(`${api}/comments/${comment.id}`, {
+  method: 'PUT',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ title: comment.title, body: comment.body })
+}).then(res => res.json())

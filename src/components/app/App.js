@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Header from '../header/Header'
 import BlogForm from '../form/BlogForm'
 import BlogContainer from '../blog/BlogContainer'
 import CategoryList from '../category/CategoryList'
 import { connect } from 'react-redux'
-import * as BlogAPI from '../../utils/api'
 import { withRouter, Route } from 'react-router-dom'
-import { getPosts, getPostsAsync } from '../../actions'
+import { getPostsAsync, getCommentsAsync } from '../../actions'
+
 
 
 class App extends Component {
@@ -18,7 +17,7 @@ class App extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, comments } = this.props
     return (
       <div>
         <Header></Header>
@@ -34,8 +33,11 @@ class App extends Component {
                 <Route path="/post/new" render={({match}) => {
                   return <BlogForm action={"new"}  />
                   }} />
-                <Route path="/post/:postId/edit" render={({match}) => {
-                  return <BlogForm action={"edit"} id={match.params.postId} />
+                <Route exact path="/post/:post_id/edit" render={({match}) => {
+                  return <BlogForm action={"edit"} id={match.params.post_id} />
+                  }} />
+                <Route path="/:category/:post_id" render={({match}) => {
+                  return <BlogContainer category={match.params.category} posts={posts} post_id={match.params.post_id} comments={comments} />
                   }} />
               </div>
               <CategoryList />
@@ -48,13 +50,14 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    comments: state.comments
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadPosts: () => dispatch(getPostsAsync())
+    loadPosts: () => dispatch(getPostsAsync()),
   }
 }
 
