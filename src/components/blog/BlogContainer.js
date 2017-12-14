@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BlogPost from '../blog/BlogPost'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPostsAsync, getCommentsAsync } from '../../actions'
+import { getPostsAsync, getCommentsAsync, votePostAsync,voteCommentAsync, deletePostAsync, deleteCommentAsync } from '../../actions'
 import { withRouter } from 'react-router-dom'
 
 class BlogContainer extends Component {  
@@ -14,7 +14,23 @@ class BlogContainer extends Component {
     }
   }
 
-  render() {    
+  onVote = (id, vote) => {
+    this.props.doVote(id, vote)
+  }
+
+  onVoteComment = (id, vote) => {
+    this.props.doCommentVote(id, vote)
+  }
+
+  onPostDelete = (post) => {
+    this.props.doPostDelete(post)
+  }
+
+  onCommentDelete = (comment) => {
+    this.props.doCommentDelete(comment)
+  }
+
+  render() {
     const { category, posts, post_id, comments } = this.props
     console.log('comments', comments)
     
@@ -24,13 +40,16 @@ class BlogContainer extends Component {
         <div>Sort by: <a href="#" >Date</a>&nbsp;<a href="#" >Votes</a></div>
         <br />
         {category && post_id && posts.filter(x => x.id === post_id).map((post) => (
-            <BlogPost key={post.id} post={post} comments={comments} showForm={true} />
+            <BlogPost key={post.id} post={post} comments={comments} showForm={true} onVote={this.onVote} onVoteComment={this.onVoteComment}
+             onPostDelete={this.onPostDelete} onCommentDelete={this.onCommentDelete} />
         ))}
         {category && !post_id && posts.filter(x => x.category === category).map((post) => (
-            <BlogPost key={post.id} post={post} showForm={false} />
+            <BlogPost key={post.id} post={post} showForm={false} onVote={this.onVote} onVoteComment={this.onVoteComment} onPostDelete={this.onPostDelete}
+            onCommentDelete={this.onCommentDelete} />
         ))}
         {!category && !post_id && posts.map((post) => (
-            <BlogPost key={post.id} post={post} showForm={false} />
+            <BlogPost key={post.id} post={post} showForm={false} onVote={this.onVote} onVoteComment={this.onVoteComment} onPostDelete={this.onPostDelete}
+            onCommentDelete={this.onCommentDelete} />
         ))}
 
         </div>  
@@ -47,7 +66,11 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadComments: (post_id) => dispatch(getCommentsAsync(post_id))
+    loadComments: (post_id) => dispatch(getCommentsAsync(post_id)),
+    doVote: (id, vote) => dispatch(votePostAsync(id, vote)),
+    doCommentVote: (id, vote) => dispatch(voteCommentAsync(id, vote)),
+    doPostDelete: (post) => dispatch(deletePostAsync(post)),
+    doCommentDelete: (comment) => dispatch(deleteCommentAsync(comment))
   }
 }
  

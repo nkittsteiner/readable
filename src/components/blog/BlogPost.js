@@ -9,17 +9,16 @@ class BlogPost extends Component {
     const date = new Date(post.timestamp).toDateString()
     const postEditUrl = `/post/${post.id}/edit`
     const postViewUrl = `/${post.category}/${post.id}`
-    let comentForm = ""
-    if(showForm)
-      comentForm = <CommentForm comment={{}} post_id={post.id} edit={false} />
+    let comentForm = showForm ? <CommentForm comment={{}} post_id={post.id} edit={false} /> : ""
 
     return (
           <div className="blog-post">
             <h2 className="blog-post-title"><Link to={postViewUrl}>{post.title}</Link></h2>
-            <p className="blog-post-meta">{date} by <div className="author">{post.author}</div> votes: {post.voteScore} comments: {post.commentCount} <Link to={postEditUrl}>Edit</Link> | <a href="#">Delete</a></p>
+            <p className="blog-post-meta">{date} by <div className="author">{post.author}</div> <Link to={postEditUrl}>Edit</Link> | <a href="#" onClick={e =>{e.preventDefault(); this.props.onPostDelete(post);}}>Delete</a></p>
+            <p>votes: {post.voteScore} <a href="#" onClick={e => {e.preventDefault();this.props.onVote(post.id, 'upVote')}}>up vote</a> <a href="#" onClick={e => {e.preventDefault();this.props.onVote(post.id, 'downVote')}}>down vote</a> comments: {post.commentCount} </p>
             <p>{post.body}</p>
             <br />
-            <CommentList comments={comments} />
+            <CommentList comments={comments} onVoteComment={this.props.onVoteComment} onCommentDelete={this.props.onCommentDelete} />
             <br />
             {comentForm}
           </div>
