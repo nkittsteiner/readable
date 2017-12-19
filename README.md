@@ -14,9 +14,17 @@ The main goal of this assignment is to create a full functional blog that handle
 
 This project uses yarn for building. You can use npm if you like.
 
-First run  `$ yarn` 
+You need to download / clone and install the API Server for this project [https://github.com/udacity/reactnd-project-readable-starter]
 
-Then `$ yarn start` to start the application
+Then install dependencies and start the API server:
 
-Note: You need a version of the Backend server `reactnd-project-readable-starter` running before start the app.
+- `cd api-server`
+- `npm install`
+- `node server`
+
+
+Then in another console window open `readable` frontent project and run  `$ yarn` 
+
+Finally `$ yarn start` to start the application
+
 
