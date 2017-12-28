@@ -3,7 +3,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as BlogAPI from '../../utils/api'
 import * as uuid from '../../utils/uuid'
-import { addPost, editPost } from '../../actions'
+import { addPostAsync, editPostAsync } from '../../actions'
 
 class BlogForm extends Component {
   state = {
@@ -24,25 +24,19 @@ class BlogForm extends Component {
   }
   
   insertPost(post){
-    BlogAPI.addPost(post).then((response)=>{
-      console.log(response)
-      //dispatch
-      this.props.dispatch(addPost(Object.assign(post,response)))
-      this.setState((state)=>({
-        redirect: true
-      }))
-    })
+    //dispatch
+    this.props.doAddPostAsync(post)
+    this.setState((state)=>({
+      redirect: true
+    }))
   }
 
   editPost(post){
-    BlogAPI.editPost(post).then((response)=>{
-      console.log(response)
-      //dispatch
-      this.props.dispatch(editPost(Object.assign(post,response)))
-      this.setState((state)=>({
-        redirect: true
-      }))
-    })
+    //dispatch
+    this.props.doEditPostAsync(post)
+    this.setState((state)=>({
+      redirect: true
+    }))
   }
 
   render() {
@@ -123,5 +117,11 @@ const mapStateToProps = state => {
     posts: state.posts
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doAddPostAsync: (post) => dispatch(addPostAsync(post)),
+    doEditPostAsync: (post) => dispatch(editPostAsync(post))
+  }
+}
 
-export default withRouter(connect(mapStateToProps)(BlogForm));  
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogForm));  

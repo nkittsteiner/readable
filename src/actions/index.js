@@ -1,4 +1,6 @@
 import * as API from '../utils/api'
+
+
 export const GET_POSTS = 'GET_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
@@ -9,6 +11,8 @@ export const VOTE_POST = 'VOTE_POST'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const SORT_POSTS_BY_DATE = 'SORT_POSTS_BY_DATE'
+export const SORT_POSTS_BY_SCORE = 'SORT_POSTS_BY_SCORE'
 
 export const getPosts = posts => ({
     type: GET_POSTS,
@@ -28,10 +32,26 @@ export const addPost = (post) => ({
     post
 })
 
+export const addPostAsync = (post) => {
+    return dispatch => {
+        API.insertPost(post).then(
+            data => dispatch(addPost(Object.assign(data,post)))
+        )
+    }
+}
+
 export const editPost = (post) => ({
     type: EDIT_POST,
     post
 })
+
+export const editPostAsync = (post) => {
+    return dispatch => {
+        API.updatePost(post).then(data => {
+            dispatch(editPost(data))            
+        })
+    }
+}
 
 export const getComments = (post_id, comments) => ({
     type: GET_COMMENTS,
@@ -51,10 +71,26 @@ export const addComment = (comment) => ({
     comment
 })
 
+export const addCommentAsync = (comment) => {
+    return dispatch => {
+        API.insertComment(comment).then(
+            data => dispatch(addComment(Object.assign(data,comment)))
+        )
+    }
+}
+
 export const editComment = (comment) => ({
     type: EDIT_COMMENT,
     comment
 })
+
+export const editCommentAsync = (comment) => {
+    return dispatch => {
+        API.updateComment(comment).then(data => {
+            dispatch(editComment(data))            
+        })
+    }
+}
 
 export const votePostAsync = (id, vote) => {
     return dispatch => {
@@ -108,4 +144,12 @@ export const deleteCommentAsync = (comment) => {
 export const deleteComment = (comment) => ({
     type: DELETE_COMMENT,
     comment
+})
+
+export const sortPostByDate = () => ({
+    type: SORT_POSTS_BY_DATE
+})
+
+export const sortPostByScore = () => ({
+    type: SORT_POSTS_BY_SCORE
 })

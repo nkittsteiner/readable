@@ -14,8 +14,8 @@ class BlogPost extends Component {
     return (
           <div className="blog-post">
             <h2 className="blog-post-title"><Link to={postViewUrl}>{post.title}</Link></h2>
-            <p className="blog-post-meta">{date} by <div className="author">{post.author}</div> <Link to={postEditUrl}>Edit</Link> | <a href="#" onClick={e =>{e.preventDefault(); this.props.onPostDelete(post);}}>Delete</a></p>
-            <p>votes: {post.voteScore} <a href="#" onClick={e => {e.preventDefault();this.props.onVote(post.id, 'upVote')}}>up vote</a> <a href="#" onClick={e => {e.preventDefault();this.props.onVote(post.id, 'downVote')}}>down vote</a> comments: {post.commentCount} </p>
+            <div className="blog-post-meta">{date} by <div className="author">{post.author}</div> <Link to={postEditUrl}><button>Edit</button></Link> | <button onClick={e =>{e.preventDefault(); this.props.onPostDelete(post);}}>Delete</button></div>
+            <p>votes: {post.voteScore} <button onClick={e => {e.preventDefault();this.props.onVote(post.id, 'upVote')}}>up vote</button> <button onClick={e => {e.preventDefault();this.props.onVote(post.id, 'downVote')}}>down vote</button> comments: {post.commentCount} </p>
             <p>{post.body}</p>
             <br />
             <CommentList comments={comments} onVoteComment={this.props.onVoteComment} onCommentDelete={this.props.onCommentDelete} />

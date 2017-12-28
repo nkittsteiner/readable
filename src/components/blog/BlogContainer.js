@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import BlogPost from '../blog/BlogPost'
 import { Link } from 'react-router-dom'
+import ErrorPage from '../ErrorPage'
 import { connect } from 'react-redux'
-import { getPostsAsync, getCommentsAsync, votePostAsync,voteCommentAsync, deletePostAsync, deleteCommentAsync } from '../../actions'
-import { withRouter } from 'react-router-dom'
+import { 
+  getPostsAsync,
+  getCommentsAsync,
+  votePostAsync,
+  voteCommentAsync,
+  deletePostAsync,
+  deleteCommentAsync,
+  sortPostByDate,
+  sortPostByScore } from '../../actions'
+import { withRouter, Redirect } from 'react-router-dom'
 
 class BlogContainer extends Component {  
 
@@ -30,14 +39,35 @@ class BlogContainer extends Component {
     this.props.doCommentDelete(comment)
   }
 
+  onSortByDate = (e) => {
+    e.preventDefault();
+    this.props.sortByDate();
+  }
+
+  onSortByScore = (e) => {
+    e.preventDefault();
+    this.props.sortByScore()
+  }
+
+  redirectHtml = (posts, post_id) => {
+    let flag = false
+    if(posts.length === 0 && posts.filter(x=> x.id === post_id).length === 0){
+      console.log('SHOULD SEND ERROR')
+      flag = true
+    }
+    return flag
+  }
+
   render() {
     const { category, posts, post_id, comments } = this.props
-    console.log('comments', comments)
+    console.log('render blog container', category, posts, post_id, comments)
     
+
     return (
         <div>
+          
         <div><Link to="/post/new">Add post</Link></div> 
-        <div>Sort by: <a href="#" >Date</a>&nbsp;<a href="#" >Votes</a></div>
+        <div>Sort by: <a href="#" onClick={(e) => this.onSortByDate(e)} >Date</a>&nbsp;<a href="#"onClick={(e) => this.onSortByScore(e)} >Votes</a></div>
         <br />
         {category && post_id && posts.filter(x => x.id === post_id).map((post) => (
             <BlogPost key={post.id} post={post} comments={comments} showForm={true} onVote={this.onVote} onVoteComment={this.onVoteComment}
@@ -70,7 +100,9 @@ const mapDispatchToProps = (dispatch) => {
     doVote: (id, vote) => dispatch(votePostAsync(id, vote)),
     doCommentVote: (id, vote) => dispatch(voteCommentAsync(id, vote)),
     doPostDelete: (post) => dispatch(deletePostAsync(post)),
-    doCommentDelete: (comment) => dispatch(deleteCommentAsync(comment))
+    doCommentDelete: (comment) => dispatch(deleteCommentAsync(comment)),
+    sortByDate: () => dispatch(sortPostByDate()),
+    sortByScore: () => dispatch(sortPostByScore())
   }
 }
  

@@ -1,28 +1,19 @@
 import React, { Component } from 'react';
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import * as BlogAPI from '../../utils/api'
 import * as uuid from '../../utils/uuid'
-import { addComment, editComment } from '../../actions'
+import { addCommentAsync, editCommentAsync } from '../../actions'
 
 class CommentForm extends Component {
 
   insertComment = (comment) => {
-    BlogAPI.addComment(comment).then((response)=>{
-      console.log(response)
-      //dispatch
-      this.props.dispatch(addComment(Object.assign(comment,response)))
-    })    
+    this.props.doAddCommentAsync(comment)
   }
 
   editComment(comment){
     console.log('editComment', comment)
-    BlogAPI.editComment(comment).then((response)=>{
-      console.log(response)
-      //dispatch
-      this.props.dispatch(editComment(Object.assign(comment,response)))
-      this.props.handleCloseModal()
-    })
+    this.props.doEditCommentAsync(comment)
+    this.props.handleCloseModal()
   }  
 
   render() {
@@ -33,7 +24,7 @@ class CommentForm extends Component {
           <form onSubmit={e => {
               e.preventDefault()
               let obj = {
-                id: document.forms[0]['id'].value === undefined ? uuid.uuid() : document.forms[0]['id'].value,
+                id: uuid.uuid(),
                 timestamp: Date.now(),
                 body: document.forms[0]['body'].value,
                 author: document.forms[0]['author'].value,
@@ -46,7 +37,7 @@ class CommentForm extends Component {
                   timestamp: Date.now(),
                   body: document.forms[1]['body'].value,
                   author: document.forms[1]['author'].value,
-                  parentId: post_id
+                  parentId: comment.parentId
   
                 }                
                 this.editComment(obj)
@@ -71,5 +62,18 @@ class CommentForm extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    posts: state.posts,
+    comments: state.comments
+  }
+}
 
-export default withRouter(connect()(CommentForm));  
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doAddCommentAsync: (comment) => dispatch(addCommentAsync(comment)),
+    doEditCommentAsync: (comment) => dispatch(editCommentAsync(comment))
+  }
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CommentForm));  

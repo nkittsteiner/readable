@@ -27,7 +27,7 @@ class CommentList extends Component {
         <div>
             <ul>
                 {comments && comments.map(comment => (
-                    <li key={comment.id}>{comment.author} says: {comment.body} | votes: {comment.voteScore} | <a href="#" onClick={() => {this.handleOpenModal(comment)}}>Edit</a> | <a href="#" onClick={e => {e.preventDefault(); this.props.onCommentDelete(comment) }}>Delete</a> | <a href="#" onClick={e => {e.preventDefault();this.props.onVoteComment(comment.id, 'upVote')}}>up vote</a> <a href="#" onClick={e => {e.preventDefault();this.props.onVoteComment(comment.id, 'downVote')}}>down vote</a>
+                    <li key={comment.id}>{comment.author} says: {comment.body} | votes: {comment.voteScore} | <button onClick={() => {this.handleOpenModal(comment)}}>Edit</button> | <button onClick={e => {e.preventDefault(); this.props.onCommentDelete(comment) }}>Delete</button> | <button onClick={e => {e.preventDefault();this.props.onVoteComment(comment.id, 'upVote')}}>up vote</button> <button onClick={e => {e.preventDefault();this.props.onVoteComment(comment.id, 'downVote')}}>down vote</button>
                     </li>
                 ))}
             </ul>
