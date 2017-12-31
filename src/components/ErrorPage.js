@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class ErrorPage extends Component {
     render(){
         return(
-            <div>Request doesn't match any action</div>
+            <div><strong>404</strong> Not found</div>
         )
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BlogPost from '../blog/BlogPost'
+import BlogForm from "../form/BlogForm";
 import { Link } from 'react-router-dom'
 import ErrorPage from '../ErrorPage'
 import { connect } from 'react-redux'
@@ -12,7 +13,7 @@ import {
   deleteCommentAsync,
   sortPostByDate,
   sortPostByScore } from '../../actions'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class BlogContainer extends Component {  
 
@@ -62,10 +63,8 @@ class BlogContainer extends Component {
     const { category, posts, post_id, comments } = this.props
     console.log('render blog container', category, posts, post_id, comments)
     
-
     return (
         <div>
-          
         <div><Link to="/post/new">Add post</Link></div> 
         <div>Sort by: <a href="#" onClick={(e) => this.onSortByDate(e)} >Date</a>&nbsp;<a href="#"onClick={(e) => this.onSortByScore(e)} >Votes</a></div>
         <br />

@@ -7,7 +7,7 @@ import ErrorPage from '../ErrorPage'
 import CategoryList from '../category/CategoryList'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
-import { getPostsAsync, getCommentsAsync } from '../../actions'
+import { getPostsAsync } from '../../actions'
 
 
 
@@ -36,17 +36,24 @@ class App extends Component {
                   <Route exact path="/" render={({match}) => {
                     return <BlogContainer posts={posts} />
                     }} />
-                  <Route exact path="/post/new" render={({match}) => {
+                  <Route path="/post/new" render={({match}) => {
                     return <BlogForm action={"new"} />
                     }} />
                   <Route exact path="/post/:post_id/edit" render={({match}) => {
                     return <BlogForm action={"edit"} id={match.params.post_id} />
                     }} />
                   <Route path="/:category/:post_id" render={({match}) => {
-                    return <BlogContainer category={match.params.category} posts={posts} post_id={match.params.post_id} comments={comments} />
+                    if(match.params.post_id !== undefined && match.params.post_id !== null){
+                      if(posts.length === 0 || posts.filter(x=> x.id === match.params.post_id).length === 0){
+                        console.log('Show error 404')
+                        return <ErrorPage />
+                      }
+                      else{
+                        return <BlogContainer category={match.params.category} posts={posts} post_id={match.params.post_id} comments={comments} />
+                      }
+                    }
                     }} />
-                  <Route component={ErrorPage} status={404}/>
-                </Switch>
+                  </Switch>
               </div>
               <CategoryList />
             </div>
