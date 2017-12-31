@@ -76,7 +76,6 @@ class BlogForm extends Component {
                 author: document.forms[0]['author'].value,
                 category: document.forms[0]['category'].value,
               }
-              console.log(this.context)
               if(action === 'edit'){
                 this.editPost(obj)
               }

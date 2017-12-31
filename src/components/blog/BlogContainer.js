@@ -6,7 +6,6 @@ import ErrorPage from '../ErrorPage'
 import { connect } from 'react-redux'
 import { 
   getPostsAsync,
-  getCommentsAsync,
   votePostAsync,
   voteCommentAsync,
   deletePostAsync,
@@ -16,13 +15,6 @@ import {
 import { withRouter } from 'react-router-dom'
 
 class BlogContainer extends Component {  
-
-  componentDidMount(){
-    console.log('componentDidMount', this.props.category , this.props.post_id)
-    if(this.props.category && this.props.post_id ){
-        this.props.loadComments(this.props.post_id) 
-    }
-  }
 
   onVote = (id, vote) => {
     this.props.doVote(id, vote)
@@ -50,19 +42,9 @@ class BlogContainer extends Component {
     this.props.sortByScore()
   }
 
-  redirectHtml = (posts, post_id) => {
-    let flag = false
-    if(posts.length === 0 && posts.filter(x=> x.id === post_id).length === 0){
-      console.log('SHOULD SEND ERROR')
-      flag = true
-    }
-    return flag
-  }
-
   render() {
     const { category, posts, post_id, comments } = this.props
-    console.log('render blog container', category, posts, post_id, comments)
-    
+       
     return (
         <div>
         <div><Link to="/post/new">Add post</Link></div> 
@@ -88,14 +70,12 @@ class BlogContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-      posts: state.posts,
       comments: state.comments
     }
   }
   
 const mapDispatchToProps = (dispatch) => {
-  return {
-    loadComments: (post_id) => dispatch(getCommentsAsync(post_id)),
+  return {    
     doVote: (id, vote) => dispatch(votePostAsync(id, vote)),
     doCommentVote: (id, vote) => dispatch(voteCommentAsync(id, vote)),
     doPostDelete: (post) => dispatch(deletePostAsync(post)),

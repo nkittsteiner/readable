@@ -7,14 +7,14 @@ import ErrorPage from '../ErrorPage'
 import CategoryList from '../category/CategoryList'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
-import { getPostsAsync } from '../../actions'
+import { getPostsAsync, getCommentsAsync } from '../../actions'
 
 
 
 class App extends Component {
 
   componentDidMount = () => {
-    this.props.loadPosts()
+    this.props.loadPosts()    
   }
 
   NoMatch = () => {
@@ -22,7 +22,7 @@ class App extends Component {
   }  
 
   render() {
-    const { posts, comments } = this.props
+    const { posts } = this.props
     return (
       <div>
         <Header></Header>
@@ -45,11 +45,11 @@ class App extends Component {
                   <Route path="/:category/:post_id" render={({match}) => {
                     if(match.params.post_id !== undefined && match.params.post_id !== null){
                       if(posts.length === 0 || posts.filter(x=> x.id === match.params.post_id).length === 0){
-                        console.log('Show error 404')
                         return <ErrorPage />
                       }
                       else{
-                        return <BlogContainer category={match.params.category} posts={posts} post_id={match.params.post_id} comments={comments} />
+                        this.props.loadComments(match.params.post_id)
+                        return <BlogContainer category={match.params.category} posts={posts} post_id={match.params.post_id} />
                       }
                     }
                     }} />
@@ -65,14 +65,14 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts,
-    comments: state.comments
+    posts: state.posts
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadPosts: () => dispatch(getPostsAsync()),
+    loadComments: (post_id) => dispatch(getCommentsAsync(post_id)), 
   }
 }
 

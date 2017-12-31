@@ -9,7 +9,6 @@ class CommentList extends Component {
   }
 
   handleOpenModal = (comment) => {
-    console.log('handleOpenModal', comment)  
     this.setState({ 
         showModal: true, 
         comment: comment
@@ -22,7 +21,6 @@ class CommentList extends Component {
 
   render() {
     const { comments } = this.props
-    console.log(comments)
     return (
         <div>
             <ul>

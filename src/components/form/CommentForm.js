@@ -11,7 +11,6 @@ class CommentForm extends Component {
   }
 
   editComment(comment){
-    console.log('editComment', comment)
     this.props.doEditCommentAsync(comment)
     this.props.handleCloseModal()
   }  

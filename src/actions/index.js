@@ -59,6 +59,7 @@ export const getComments = (post_id, comments) => ({
 })
 
 export const getCommentsAsync = (post_id) => {
+    console.log('getCommentsAsync')
     return dispatch => {
         return API.getComments(post_id).then(
             data => dispatch(getComments(post_id, data))

@@ -71,7 +71,6 @@ const reducer = (state = initialState, action) =>{
 
             return Object.assign({}, state, {
                 comments: Array.from(state.comments, x => x.id === action.id ? _comment : x)
-                //comments: state.comments.filter(x => x.id !== action.id).concat([_comment])
             })
         case DELETE_POST:
             return Object.assign({}, state, {
